@@ -97,6 +97,25 @@ From the paper text or arxiv page, extract:
 
 Save to `paper_metadata.json`.
 
+### Step 8: Search for official code repositories
+
+The `fetch_paper.py` script automatically searches for official code in two places:
+
+1. **Inside the paper text** — scans for GitHub/GitLab/Bitbucket URLs and phrases like "code available at," "our implementation is released at," etc.
+2. **The arxiv abstract page** — checks for code repository links in the page HTML.
+
+Results are saved to `paper_metadata.json` under the `official_code` key. Each entry has:
+- `url` — the repository URL
+- `source` — where it was found (`paper_text` or `arxiv_page`)
+- `context` — surrounding text that confirms it's the authors' code
+
+**After the script runs, verify the links:**
+- Open the repository URL. Is it actually the authors' official code for THIS paper, or an unrelated repo?
+- Does the repo contain a working implementation? Some repos are empty placeholders or "coming soon."
+- Note the primary language/framework — this may inform your implementation choices.
+
+If official code is found, it becomes a critical resource for Stage 3 (Ambiguity Audit). Every `[UNSPECIFIED]` item should be checked against the official code before choosing a default. Choices resolved this way get the `[FROM_OFFICIAL_CODE]` tag instead.
+
 ---
 
 ## Fallback protocol
@@ -128,5 +147,6 @@ Save to `paper_metadata.json`.
 - [ ] You've checked for algorithm boxes
 - [ ] Equations are present (even if in LaTeX form)
 - [ ] The Method/Model section is identified and readable
+- [ ] You've checked for official code repositories (results in `paper_metadata.json` under `official_code`)
 
 If the Method section is garbled but other sections are fine, attempt to re-extract just that section from the HTML version. The Method section is the most critical — you cannot proceed without a readable version of it.

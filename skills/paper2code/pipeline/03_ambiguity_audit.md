@@ -5,7 +5,8 @@ This is the most important anti-hallucination stage. Before generating a single 
 
 ## Input
 - Parsed paper sections from Stage 1
-- Contribution analysis from Stage 2
+- Contribution analysis from Stage 2 (includes official code status)
+- Official code repository (if found in Stage 1 — URL in `paper_metadata.json` under `official_code`)
 
 ## Output
 - `.paper2code_work/{ARXIV_ID}/ambiguity_audit.md` — complete audit with classification for every item
@@ -121,6 +122,32 @@ When the paper says "following [X]" or "similar to [X]" or "as in [X]":
 2. If X is a well-known paper (e.g., "following Vaswani et al."), describe what X specifies
 3. If X is an obscure paper, flag this as requiring the reader to look up that paper
 4. Record: `[PARTIALLY_SPECIFIED] Paper says "following [X]" for {component} — X specifies {detail} but reader should verify`
+
+---
+
+### How to resolve ambiguities using official code
+
+If official code was found in Stage 1, use it as a primary resource for resolving `UNSPECIFIED` and `PARTIALLY_SPECIFIED` items. This is the single most effective way to reduce ambiguity.
+
+**Process:**
+1. For each `UNSPECIFIED` item, search the official repo for the relevant implementation detail (e.g., grep for "eps", "dropout", "lr" in config files and model code).
+2. If you find the answer, change the classification:
+   - `UNSPECIFIED` → `SPECIFIED` with tag `[FROM_OFFICIAL_CODE]`
+   - `PARTIALLY_SPECIFIED` → `SPECIFIED` with tag `[FROM_OFFICIAL_CODE]`
+3. Record the exact file and line from the official repo: `github.com/author/repo/blob/main/model.py#L42`
+
+**What official code can resolve:**
+- Activation functions, normalization epsilon, dropout placement
+- Initialization schemes (often the biggest silent assumption)
+- Learning rate schedule details, optimizer parameters
+- Data preprocessing steps
+- Any "standard settings" or "following prior work" references
+
+**What official code cannot resolve:**
+- Whether the code matches the paper's intent (bugs exist in official code too)
+- Whether a detail was chosen for the paper's experiments vs. for engineering convenience
+
+**Important:** Official code is a reference, not ground truth. If the official code contradicts the paper, note both and flag the discrepancy. See the errata section below.
 
 ---
 

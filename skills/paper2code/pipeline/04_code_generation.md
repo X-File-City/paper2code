@@ -7,6 +7,7 @@ Generate the implementation repository. Every line of code must be anchored to t
 - Contribution analysis from Stage 2
 - Ambiguity audit from Stage 3
 - Paper sections from Stage 1
+- Official code repository (if found — URL in `paper_metadata.json` under `official_code`)
 
 ## Output
 - `{paper_slug}/` directory with all generated files
@@ -22,6 +23,7 @@ Before writing any code, verify:
 - [ ] You've read `guardrails/scope_enforcement.md` to know what's in/out of scope
 - [ ] You've read the relevant `knowledge/` files for domain-specific gotchas
 - [ ] You've checked `knowledge/paper_to_code_mistakes.md` for relevant pitfalls
+- [ ] You've checked if official code exists (in `paper_metadata.json`) and reviewed any `[FROM_OFFICIAL_CODE]` items in the ambiguity audit
 
 ---
 

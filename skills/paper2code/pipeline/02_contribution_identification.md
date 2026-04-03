@@ -5,7 +5,7 @@ Before writing any code, you must understand exactly what this paper contributes
 
 ## Input
 - Parsed paper sections from Stage 1
-- `paper_metadata.json`
+- `paper_metadata.json` (includes `official_code` links if any were found)
 
 ## Output
 - `.paper2code_work/{ARXIV_ID}/contribution.md` — contains the contribution statement, paper classification, and implementation scope
@@ -77,7 +77,18 @@ Search the paper for formal algorithm descriptions (usually labeled "Algorithm 1
 
 If there is no Algorithm box, note this — it means the implementation will rely more on equations and prose, which are more ambiguous.
 
-### Step 4: Identify what to implement vs. reference
+### Step 4: Check for official code
+
+Check `paper_metadata.json` for the `official_code` field. If official code repositories were found in Stage 1:
+
+1. **Verify the link** — open the URL. Confirm it's the authors' code for this paper, not an unrelated project or empty placeholder.
+2. **Note the framework** — is it PyTorch, JAX, TensorFlow? This may inform your implementation.
+3. **Note the repo structure** — what files exist? This helps you understand the implementation scope.
+4. **Do NOT read the code in detail yet** — that happens in Stage 3 when resolving ambiguities. At this stage, you just need to know it exists and what it covers.
+
+Record the official code status in the contribution statement (Step 5).
+
+### Step 5: Identify what to implement vs. reference
 
 Make three lists:
 
@@ -96,7 +107,7 @@ Make three lists:
 - Dataset collection or annotation procedures
 - Deployment-specific optimizations
 
-### Step 5: Write the contribution statement
+### Step 6: Write the contribution statement
 
 Write a structured contribution statement and save it to `contribution.md`:
 
@@ -120,6 +131,11 @@ arxiv: {id}
 ## Algorithm specification
 {Whether an Algorithm box exists, and if so, which one is the primary specification}
 
+## Official code
+{URL if found, or "None found"}
+{Framework used in official code, if applicable}
+{Brief note on what the official repo covers}
+
 ## Implementation scope
 ### Will implement:
 - {item 1 — with paper section reference}
@@ -137,7 +153,7 @@ arxiv: {id}
 3. {Appendix A — what it specifies}
 ```
 
-### Step 6: Self-check
+### Step 7: Self-check
 
 Before proceeding:
 - Could a competent ML engineer read my contribution statement and know exactly what to build? If not, it's too vague.
@@ -157,4 +173,4 @@ Before proceeding:
 
 4. **Skipping the Algorithm box.** If Algorithm 1 exists and you don't read it carefully, you will implement based on noisy prose instead of the precise specification.
 
-5. **Not checking for official code.** Search for links in the paper — often in the abstract, introduction, or a footnote. If official code exists, note its URL. It will be useful in Stage 3 for resolving ambiguities.
+5. **Ignoring official code.** Stage 1 automatically searches for code links, but you must verify them in Step 4. If official code exists and you skip it, you'll waste time on ambiguities that the authors already resolved.
