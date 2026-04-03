@@ -1,0 +1,244 @@
+{
+  "id": "paper2code-intro",
+  "title": "paper2code: From Research Papers to Honest Code",
+  "description": "A guided tour of the paper2code skill — an AI system that converts arxiv papers into citation-anchored Python implementations where every ambiguity is flagged, never silently invented.",
+  "version": "1.0.0",
+  "steps": [
+    {
+      "id": "overview",
+      "title": "Welcome to paper2code",
+      "description": "paper2code is a Claude Code skill that converts ML research papers into trustworthy implementations. Its core philosophy: never silently invent implementation details. Every code decision traces back to the paper, and every ambiguity is explicitly flagged. The codebase is organized into a 5-stage pipeline, guardrails, a knowledge base, templates, utility scripts, and fully worked examples.",
+      "focusDirectory": "",
+      "colorMode": "fileTypes"
+    },
+    {
+      "id": "orchestrator",
+      "title": "The Orchestrator",
+      "description": "The highlighted file is the entry point and high-level orchestration guide. It defines the 5-stage pipeline sequence, specifies which guardrails must be loaded before each stage, and controls the overall flow from paper URL to finished project. Think of it as the conductor of the entire system.",
+      "focusDirectory": "skills/paper2code",
+      "colorMode": "fileTypes",
+      "highlightLayers": [
+        {
+          "id": "skill-entry",
+          "name": "Entry Point",
+          "color": "#f59e0b",
+          "items": [
+            { "path": "skills/paper2code/SKILL.md", "type": "file" }
+          ],
+          "opacity": 0.8,
+          "renderStrategy": "border"
+        }
+      ]
+    },
+    {
+      "id": "pipeline",
+      "title": "The 5-Stage Pipeline",
+      "description": "The heart of paper2code is a sequential 5-stage pipeline: fetch the paper, identify the core contribution, audit every ambiguity, generate citation-anchored code, and produce a walkthrough notebook. The ambiguity audit at stage 3 is the key innovation — it classifies every implementation choice before a single line of code is written.",
+      "focusDirectory": "skills/paper2code/pipeline",
+      "colorMode": "fileTypes",
+      "highlightLayers": [
+        {
+          "id": "pipeline-stages",
+          "name": "Pipeline Stages",
+          "color": "#3b82f6",
+          "items": [
+            { "path": "skills/paper2code/pipeline/01_paper_acquisition.md", "type": "file" },
+            { "path": "skills/paper2code/pipeline/02_contribution_identification.md", "type": "file" },
+            { "path": "skills/paper2code/pipeline/03_ambiguity_audit.md", "type": "file" },
+            { "path": "skills/paper2code/pipeline/04_code_generation.md", "type": "file" },
+            { "path": "skills/paper2code/pipeline/05_walkthrough_notebook.md", "type": "file" }
+          ],
+          "opacity": 0.7,
+          "renderStrategy": "border"
+        }
+      ]
+    },
+    {
+      "id": "guardrails",
+      "title": "Guardrails: Anti-Hallucination Protocols",
+      "description": "Three critical safety protocols enforce honesty throughout the system. The first defines the bright line rule: if the paper doesn't explicitly state it, mark it unspecified. The second determines what to implement versus reference versus exclude based on paper type. The third handles vague, contradictory, or incomplete research with specific resolution strategies.",
+      "focusDirectory": "skills/paper2code/guardrails",
+      "colorMode": "fileTypes",
+      "highlightLayers": [
+        {
+          "id": "guardrail-files",
+          "name": "Safety Protocols",
+          "color": "#ef4444",
+          "items": [
+            { "path": "skills/paper2code/guardrails/hallucination_prevention.md", "type": "file" },
+            { "path": "skills/paper2code/guardrails/scope_enforcement.md", "type": "file" },
+            { "path": "skills/paper2code/guardrails/badly_written_papers.md", "type": "file" }
+          ],
+          "opacity": 0.8,
+          "renderStrategy": "border"
+        }
+      ]
+    },
+    {
+      "id": "knowledge-base",
+      "title": "Knowledge Base: Domain Expertise",
+      "description": "Four reference guides provide canonical implementations and document common pitfalls — covering transformer components, loss functions, training recipes, and framework-specific traps that commonly trip up paper-to-code translations.",
+      "focusDirectory": "skills/paper2code/knowledge",
+      "colorMode": "fileTypes",
+      "highlightLayers": [
+        {
+          "id": "knowledge-files",
+          "name": "Domain Knowledge",
+          "color": "#8b5cf6",
+          "items": [
+            { "path": "skills/paper2code/knowledge/transformer_components.md", "type": "file" },
+            { "path": "skills/paper2code/knowledge/loss_functions.md", "type": "file" },
+            { "path": "skills/paper2code/knowledge/training_recipes.md", "type": "file" },
+            { "path": "skills/paper2code/knowledge/paper_to_code_mistakes.md", "type": "file" }
+          ],
+          "opacity": 0.7,
+          "renderStrategy": "border"
+        }
+      ]
+    },
+    {
+      "id": "scaffolds",
+      "title": "Scaffolds: Project Templates",
+      "description": "Eight templates define the structure of every generated project — covering the model, losses, training, data, evaluation, configuration, and documentation. Each is pre-wired with citation comments and shape annotations so the output is self-documenting from the start.",
+      "focusDirectory": "skills/paper2code/scaffolds",
+      "colorMode": "fileTypes",
+      "highlightLayers": [
+        {
+          "id": "scaffold-files",
+          "name": "Templates",
+          "color": "#10b981",
+          "items": [
+            { "path": "skills/paper2code/scaffolds/model_template.py", "type": "file" },
+            { "path": "skills/paper2code/scaffolds/loss_template.py", "type": "file" },
+            { "path": "skills/paper2code/scaffolds/train_template.py", "type": "file" },
+            { "path": "skills/paper2code/scaffolds/data_template.py", "type": "file" },
+            { "path": "skills/paper2code/scaffolds/evaluate_template.py", "type": "file" },
+            { "path": "skills/paper2code/scaffolds/config_template.yaml", "type": "file" },
+            { "path": "skills/paper2code/scaffolds/readme_template.md", "type": "file" },
+            { "path": "skills/paper2code/scaffolds/reproduction_notes_template.md", "type": "file" }
+          ],
+          "opacity": 0.7,
+          "renderStrategy": "border"
+        }
+      ]
+    },
+    {
+      "id": "scripts",
+      "title": "Utility Scripts",
+      "description": "Two scripts handle paper processing. The first downloads arxiv papers, extracts their text with multiple parser fallbacks, and searches for official code repositories. The second parses the extracted content to identify sections, algorithm boxes, numbered equations, tables, and footnotes — treating appendices as first-class sources.",
+      "focusDirectory": "skills/paper2code/scripts",
+      "colorMode": "fileTypes",
+      "highlightLayers": [
+        {
+          "id": "script-files",
+          "name": "Utility Scripts",
+          "color": "#06b6d4",
+          "items": [
+            { "path": "skills/paper2code/scripts/fetch_paper.py", "type": "file" },
+            { "path": "skills/paper2code/scripts/extract_structure.py", "type": "file" }
+          ],
+          "opacity": 0.7,
+          "renderStrategy": "border"
+        }
+      ]
+    },
+    {
+      "id": "worked-examples",
+      "title": "Worked Examples: Proof by Demonstration",
+      "description": "Two fully worked examples show what paper2code produces. The first implements the original Transformer paper with section citations in the model, a full ambiguity audit, and a walkthrough notebook. The second does the same for the Denoising Diffusion Probabilistic Models paper. Each includes source code, configuration, documentation, and an interactive notebook.",
+      "focusDirectory": "skills/paper2code/worked",
+      "colorMode": "fileTypes",
+      "highlightLayers": [
+        {
+          "id": "transformer-example",
+          "name": "Transformer (1706.03762)",
+          "color": "#f97316",
+          "items": [
+            { "path": "skills/paper2code/worked/attention_is_all_you_need", "type": "directory" }
+          ],
+          "opacity": 0.6,
+          "renderStrategy": "border"
+        },
+        {
+          "id": "ddpm-example",
+          "name": "DDPM (2006.11239)",
+          "color": "#ec4899",
+          "items": [
+            { "path": "skills/paper2code/worked/ddpm", "type": "directory" }
+          ],
+          "opacity": 0.6,
+          "renderStrategy": "border"
+        }
+      ]
+    },
+    {
+      "id": "full-architecture",
+      "title": "The Complete Picture",
+      "description": "paper2code is ~2,900 lines of carefully designed protocols. The pipeline (blue) processes papers in 5 stages. Guardrails (red) enforce honesty at every step. The knowledge base (purple) provides canonical implementations. Scaffolds (green) template every generated project. Scripts (cyan) handle paper fetching. Worked examples (orange/pink) prove the system works end-to-end. Together they ensure that every implementation is traceable, honest, and reproducible.",
+      "focusDirectory": "",
+      "colorMode": "fileTypes",
+      "highlightLayers": [
+        {
+          "id": "arch-pipeline",
+          "name": "Pipeline",
+          "color": "#3b82f6",
+          "items": [
+            { "path": "skills/paper2code/pipeline", "type": "directory" }
+          ],
+          "opacity": 0.5,
+          "renderStrategy": "border"
+        },
+        {
+          "id": "arch-guardrails",
+          "name": "Guardrails",
+          "color": "#ef4444",
+          "items": [
+            { "path": "skills/paper2code/guardrails", "type": "directory" }
+          ],
+          "opacity": 0.5,
+          "renderStrategy": "border"
+        },
+        {
+          "id": "arch-knowledge",
+          "name": "Knowledge Base",
+          "color": "#8b5cf6",
+          "items": [
+            { "path": "skills/paper2code/knowledge", "type": "directory" }
+          ],
+          "opacity": 0.5,
+          "renderStrategy": "border"
+        },
+        {
+          "id": "arch-scaffolds",
+          "name": "Scaffolds",
+          "color": "#10b981",
+          "items": [
+            { "path": "skills/paper2code/scaffolds", "type": "directory" }
+          ],
+          "opacity": 0.5,
+          "renderStrategy": "border"
+        },
+        {
+          "id": "arch-scripts",
+          "name": "Scripts",
+          "color": "#06b6d4",
+          "items": [
+            { "path": "skills/paper2code/scripts", "type": "directory" }
+          ],
+          "opacity": 0.5,
+          "renderStrategy": "border"
+        },
+        {
+          "id": "arch-examples",
+          "name": "Worked Examples",
+          "color": "#f97316",
+          "items": [
+            { "path": "skills/paper2code/worked", "type": "directory" }
+          ],
+          "opacity": 0.5,
+          "renderStrategy": "border"
+        }
+      ]
+    }
+  ]
+}
