@@ -44,6 +44,8 @@ python skills/paper2code/scripts/extract_structure.py .paper2code_work/{ARXIV_ID
 ```
 Verify the outputs exist before proceeding. If extraction failed, follow the fallback protocol in `pipeline/01_paper_acquisition.md`.
 
+The script also searches for official code repositories (in the paper text and on the arxiv page) and saves any found links to `paper_metadata.json` under the `official_code` key. Verify these links before relying on them — see Step 8 in `pipeline/01_paper_acquisition.md`.
+
 ### Stage 2 — Contribution Identification
 Read and follow: `pipeline/02_contribution_identification.md`
 
