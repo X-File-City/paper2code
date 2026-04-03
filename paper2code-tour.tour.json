@@ -174,7 +174,7 @@
     {
       "id": "full-architecture",
       "title": "The Complete Picture",
-      "description": "paper2code is ~2,900 lines of carefully designed protocols. The pipeline (blue) processes papers in 5 stages. Guardrails (red) enforce honesty at every step. The knowledge base (purple) provides canonical implementations. Scaffolds (green) template every generated project. Scripts (cyan) handle paper fetching. Worked examples (orange/pink) prove the system works end-to-end. Together they ensure that every implementation is traceable, honest, and reproducible.",
+      "description": "Here is the full system working together. The pipeline processes papers in 5 stages. Guardrails enforce honesty at every step. The knowledge base provides canonical implementations. Scaffolds template every generated project. Scripts handle paper fetching. Worked examples prove the system works end-to-end. Together they ensure that every implementation is traceable, honest, and reproducible.",
       "focusDirectory": "",
       "colorMode": "fileTypes",
       "highlightLayers": [
